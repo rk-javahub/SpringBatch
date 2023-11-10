@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rkjavahub</groupId>
-	<artifactId>SpringBatchDemo</artifactId>
+	<artifactId>batch-procesing-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringBatchDemo</name>
+	<name>batch-procesing-app</name>
 	<description>Demo project for Spring Batch</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -45,6 +45,16 @@
 			<groupId>org.springframework.batch</groupId>
 			<artifactId>spring-batch-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
