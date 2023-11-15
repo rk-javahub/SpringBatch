@@ -3,9 +3,11 @@
  */
 package com.rkjavahub.batch.config;
 
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
@@ -43,7 +45,7 @@ public class SpringBatchConfig {
 
 		return flatFileItemReader;
 	}
- 
+
 	/**
 	 * LineMapper defines how to read the csv file and how to map data from csv file
 	 * to the object
@@ -67,6 +69,25 @@ public class SpringBatchConfig {
 		defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
 
 		return defaultLineMapper;
+	}
+
+	@Bean
+	EmployeeProcessor employeeProcessor() {
+		return new EmployeeProcessor();
+	}
+
+	// Write the CSV information to DB
+	@Bean
+	RepositoryItemWriter<Employee> repositoryItemWriter() {
+		RepositoryItemWriter<Employee> repositoryItemWriter = new RepositoryItemWriter<>();
+		repositoryItemWriter.setRepository(employeeRepository);
+		repositoryItemWriter.setMethodName("save");
+		return repositoryItemWriter;
+	}
+
+	public Step step() {
+		return stepBuilderFactory.get("csv-step").chunk(10).reader(flatFileItemReader()).processor(employeeProcessor())
+				.writer(repositoryItemWriter()).build();
 	}
 
 }

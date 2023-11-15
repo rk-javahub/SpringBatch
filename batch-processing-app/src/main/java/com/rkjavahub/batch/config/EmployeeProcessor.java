@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rkjavahub.batch;
+package com.rkjavahub.batch.config;
 
 import org.springframework.batch.item.ItemProcessor;
 
